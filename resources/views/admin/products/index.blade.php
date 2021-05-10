@@ -1,6 +1,5 @@
 @extends('layout.app')
 @section('content')
-
     @include('admin.products.insert', ['subcategories'=>$subcategories])
 
     <div class="row mt-4" style="min-height: 500px">
@@ -79,4 +78,45 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('custom.js')
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            $('#category').change(function () {
+                var id = $(this).val();
+
+                $('#subCategory').find('option').not(':first').remove();
+
+                $.ajax({
+                    url:'categ/'+id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (response) {
+                        var len = 0;
+                        if (response.data != null) {
+                            len = response.data.length;
+                        }
+
+                        if (len>0) {
+                            for (var i = 0; i<len; i++) {
+                                var id = response.data[i].id;
+                                var name = response.data[i].name;
+
+                                var option = "<option value='"+id+"'>"+name+"</option>";
+
+                                $("#subCategory").append(option);
+                            }
+                        }
+                    }
+                })
+            });
+        });
+    </script>
 @endsection

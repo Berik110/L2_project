@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <select class="form-control" name="category_id" id="category_id" onchange="loadSubcat();">
+                        <select class="form-control" name="category_id" id="category">
                             <option>Выбрать категорию</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">
@@ -24,13 +24,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" name="subcategory_id">
+                        <select class="form-control" name="subcategory_id" id="subCategory">
                             <option value="0">Выбрать подкатегорию</option>
-                            @foreach($subcategories as $subcategory)
-                                <option value="{{$subcategory->id}}">
-                                    {{$subcategory->name}}
-                                </option>
-                            @endforeach
+{{--                            @foreach($subcategories as $subcategory)--}}
+{{--                                <option value="{{$subcategory->id}}">--}}
+{{--                                    {{$subcategory->name}}--}}
+{{--                                </option>--}}
+{{--                            @endforeach--}}
                         </select>
                         @error('subcategory_id')
                             <span class="text-danger">{{$message}}</span>
@@ -77,3 +77,4 @@
         </div>
     </div>
 </div>
+

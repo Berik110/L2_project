@@ -76,6 +76,9 @@ Route::post('/add-to-cart', [\App\Http\Controllers\CartController::class, 'addTo
 
 /* search */
 Route::get('/product/search', [\App\Http\Controllers\SubcategoryController::class, 'search']);
+/* */
+Route::get('/categories/{id}', [CategoryController::class, 'getCategory'])->name('cat');
+Route::get('/categ/{id}', [CategoryController::class, 'gCategory']);
 
 //Route::post('/subcat', function (Request $request){
 //    $parent_id = $request->cat_id;

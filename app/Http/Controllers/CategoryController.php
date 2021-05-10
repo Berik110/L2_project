@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -110,5 +111,21 @@ class CategoryController extends Controller
     {
         Category::destroy($id);
         return redirect('/admin/category');
+    }
+
+
+    public function getCategory($category_id)
+    {
+        $data = Subcategory::where('category_id',$category_id)->get();
+        \Log::info($data);
+        return response()->json(['data' => $data]);
+    }
+
+
+    public function gCategory($category_id)
+    {
+        $data = Subcategory::where('category_id',$category_id)->get();
+        \Log::info($data);
+        return response()->json(['data' => $data]);
     }
 }
