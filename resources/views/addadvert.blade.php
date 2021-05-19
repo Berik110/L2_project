@@ -19,7 +19,7 @@
 
             <form action="{{route('toAddAdv')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="user_id" value="{{$user->id}}">
+                <input type="hidden" name="user_id" value="{{$user?$user->id:''}}">
                     <div class="form-group">
                         <label>Категория</label>
                         <select class="form-control" name="category_id" id="category">

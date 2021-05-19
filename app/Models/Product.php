@@ -40,4 +40,8 @@ class Product extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id'); // Many to One
     }
+
+    public function productToUser(){
+        return $this->belongsToMany(User::class);
+    }
 }

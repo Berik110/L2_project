@@ -70,21 +70,22 @@ Route::put('/details/change/img', [\App\Http\Controllers\ProductController::clas
 Route::get('/subcategories/{id}', [App\Http\Controllers\ProductController::class, 'byCategory']);
 Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'detailsProduct']);
 
-/* корзина */
+/* корзина 1 вариант через пакет*/
 Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cartIndex');
 Route::post('/add-to-cart', [\App\Http\Controllers\CartController::class, 'addToCart'])->name('addToCart');
 
+/* корзина 2 вариант через форму отправки*/
+Route::post('add_to_cart', [ProductController::class, 'includeToCart']);
+Route::get('cart_list', [ProductController::class, 'cartList'])->name('cartList');
+Route::get('/removecart/{id}', [ProductController::class, 'removeCart']);
+Route::get('/order_now', [ProductController::class, 'orderPage']);
+Route::post('/orderplace', [ProductController::class, 'orderPlace']);
+
 /* search */
 Route::get('/product/search', [\App\Http\Controllers\SubcategoryController::class, 'search']);
-/* */
+
+/* AJAX SELECT SUBCATEGORY BY CATEGORY*/
 Route::get('/categories/{id}', [CategoryController::class, 'getCategory'])->name('cat');
 Route::get('/categ/{id}', [CategoryController::class, 'gCategory']);
 
-//Route::post('/subcat', function (Request $request){
-//    $parent_id = $request->cat_id;
-//    $subcategories = \App\Models\Category::where('id', $parent_id)->with('subcategories')->get();
-//    return response()->json([
-//        'subcategories' => $subcategories
-//    ]);
-//})->name('subcat');
 

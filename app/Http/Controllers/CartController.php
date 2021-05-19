@@ -16,11 +16,10 @@ class CartController extends Controller
     }
 
     public function addToCart(Request $request){
-        $product = Product::where('id', $request->get('id'));
+        $product = Product::where('id', $request->get('id'))->first();
         $user = Auth::user();
 
-
-        \Cart::session($user->id);
+        \Cart::session($user);
 
         \Cart::add(array(
             'id' => $product->id,

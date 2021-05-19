@@ -1,12 +1,12 @@
 @extends('layout.app')
 @section('custom.js')
     <script>
-        $(document).ready(function(){
-            $('.cart_button').click(function(event){
-                event.preventDefault()
-                addToCart();
-            })
-        })
+        // $(document).ready(function(){
+        //     $('.cart_button').click(function(event){
+        //         event.preventDefault()
+        //         addToCart();
+        //     })
+        // })
 
         function addToCart(){
             let id = $('.details_name').data('id');
@@ -42,8 +42,8 @@
             <nav aria-label="breadcrumb" >
                 <ol class="breadcrumb" style="background-color: white">
                     <li class="breadcrumb-item"><a href="{{'/'}}">Главная страница</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('/subcategories?category_id='.$subcategory->category->id)}}">{{(($subcategory)?$subcategory->category->name:'')}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{$subcategory->name}}</li>
+{{--                    <li class="breadcrumb-item"><a href="{{url('/subcategories?category_id='.$subcategory->category->id)}}">{{(($subcategory)?$subcategory->category->name:'')}}</a></li>--}}
+{{--                    <li class="breadcrumb-item active" aria-current="page">{{$subcategory->name}}</li>--}}
                 </ol>
             </nav>
         </div>
@@ -99,9 +99,13 @@
 {{--                                </select>--}}
                                 Количество <input id="quantity_input" type="number" min="1" value="1" style="max-width: 20%">
                                 @auth
-                                    <button class="btn btn-outline-success cart_button mt-2">Добавить в корзину</button>
+                                    <form action="{{url('/add_to_cart')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                                        <button class="btn btn-outline-primary cart_button mt-2">Добавить в корзину</button>
+                                    </form>
                                 @else
-                                    <button class="btn btn-outline-success cart_button mt-2" data-toggle="modal" data-target="#loginModal">Добавить в корзину</button>
+                                    <button class="btn btn-outline-primary cart_button mt-2" data-toggle="modal" data-target="#loginModal">Добавить в корзину</button>
 {{--                                    <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">{{ __('Войти') }}</a>--}}
                                 @endauth
                             </div>

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddProductRequest;
+use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Subcategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -258,6 +261,79 @@ class ProductController extends Controller
 //        $products = Product::all();
 //        return view(self::PATH . 'index', compact('user', 'products', 'subcategory', 'categories'));
 //    }
+
+    public function includeToCart(Request $request){
+        $user = Auth::user();
+        $cart = new Cart();
+        $cart->user_id = $user->id;
+        $cart->product_id = $request->get('product_id');
+        $cart->save();
+        $product = Product::where('id', $request->get('product_id'))->get();
+//        return redirect("/products?subcategory_id=".$product->subcategory_id."&category_id=".$product->subcategory->category->id);
+        return redirect()->back();
+
+        /* Можно так проверить авторизованный user или нет*/
+//        if ($request->session()->has('user')){
+//            return "hel
+//        }else{
+//            return redirect('/login');
+//        }
+    }
+
+    public static function cartItem()
+    {
+        $userId = Auth::user()->id;
+        return Cart::where('user_id', $userId)->count();
+    }
+
+    public function cartList(){
+        $userId = Auth::user()->id;
+
+        $products = DB::table('carts')
+            ->join('products', 'carts.product_id', '=', 'products.id')
+            ->where('carts.user_id', $userId)
+            ->select('products.*', 'carts.id as cart_id')
+            ->get();
+        $categories = Category::all();
+
+        return view('cart.index', compact('products', 'categories'));
+    }
+
+    public function removeCart($id){
+        Cart::destroy($id);
+        return redirect('cart_list');
+    }
+
+    public function orderPage(){
+        $userId = Auth::user()->id;
+        $total = DB::table('carts')
+            ->join('products', 'carts.product_id', '=', 'products.id')
+            ->where('carts.user_id', $userId)
+            ->sum('products.price');
+
+        $categories = Category::all();
+        return view('cart.order_page', compact('categories', 'total'));
+    }
+
+    public function orderPlace(Request $request){
+        $userId = Auth::user()->id;
+        $allcarts = Cart::where('user_id', $userId)->get();
+
+        foreach ($allcarts as $cart){
+            $order = new Order();
+            $order->product_id = $cart->product_id;
+            $order->user_id = $cart->user_id;
+            $order->status = "pending";
+            $order->payment_method = $request->get('payment');
+            $order->payment_status = "pending";
+            $order->full_name = $request->get('full_name');
+            $order->phone_number = $request->get('phone_number');
+            $order->address = $request->get('address');
+            $order->save();
+            Cart::where('user_id', $userId)->delete();
+        }
+        return redirect('/');
+    }
 
 }
 

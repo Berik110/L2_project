@@ -1,3 +1,12 @@
+<?php
+    use App\Http\Controllers\ProductController;
+    $total=0;
+
+    if (\Illuminate\Support\Facades\Auth::user()){
+        $total = ProductController::cartItem();
+    }
+
+?>
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <a class="navbar-brand" href="{{'/'}}" style="font-family: 'New Tegomin', serif;"><b><span style="color: rgba(31,180,26,0.65)">Fresh</span><span style="color: orange"> Food</span></b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,7 +17,9 @@
         <ul class="navbar-nav ml-auto">
             @auth
                 <li class="nav-item">
-                    <a href="{{route('cartIndex')}}" class="nav-link"><i class="fas fa-shopping-basket"></i>-<span class="cart-qty text-danger font-weight-bold">{{ \Cart::session(\Illuminate\Support\Facades\Auth::user()->id)->getTotalQuantity() }}</span></a>
+{{--                    <a href="{{route('cartIndex')}}" class="nav-link"><i class="fas fa-shopping-basket"></i>-<span class="cart-qty text-danger font-weight-bold">{{ \Cart::session(\Illuminate\Support\Facades\Auth::user()->id)->getTotalQuantity() }}</span></a>--}}
+{{--                    <a href="{{route('cartIndex')}}" class="nav-link"><i class="fas fa-shopping-basket"></i>-<span class="cart-qty text-danger font-weight-bold">{{ \App\Http\Controllers\ProductController::cartItem() }}</span></a> или так можно--}}
+                    <a href="{{route('cartList')}}" class="nav-link"><i class="fas fa-shopping-basket"></i>-<span class="cart-qty text-danger font-weight-bold">{{ $total }}</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('adv')}}" class="nav-link">Разместить объявление</a>

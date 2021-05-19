@@ -6,7 +6,7 @@
                 <nav aria-label="breadcrumb" >
                     <ol class="breadcrumb" style="background-color: white">
                         <li class="breadcrumb-item"><a href="{{'/'}}">Главная страница</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('subcategories', ['category_id'=>$product->category_id])}}">Техника-оборудования</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/subcategories?category_id='.$product->subcategory->category->id)}}">{{(($product)?$product->subcategory->category->name:'')}}</a></li>
                         <li class="breadcrumb-item"><a href="{{route('details', ['product_id'=>$product->id])}}">
                                 Детали - {{$product->subcategory->name}} {{$product->name}}
                             </a>

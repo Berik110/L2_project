@@ -8,12 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+//    public $timestamps = false;
+
     protected $fillable=[
-        'firstname',
-        'lastname',
+        'product_id',
+        'user_id',
+        'status',
+        'payment_method',
+        'payment_status',
+        'full_name',
         'phone_number',
-        'email',
-        'address',
-        'preferences'
+        'address'
     ];
 }

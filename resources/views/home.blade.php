@@ -9,7 +9,7 @@
             <div class="input-group" style="margin-top: 240px">
                 <input type="search" name="key" class="form-control" placeholder="Наименование продукта" aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-success naiti" data-order="name-tov">Найти</button>
+                    <button class="btn naiti" style="background-color: orange; color: white" data-order="name-tov">Найти</button>
                 </div>
             </div>
             </form>
