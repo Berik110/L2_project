@@ -97,15 +97,15 @@
 {{--                                    <option value="4">4</option>--}}
 {{--                                    <option value="5">5</option>--}}
 {{--                                </select>--}}
-                                Количество <input id="quantity_input" type="number" min="1" value="1" style="max-width: 20%">
+{{--                                Количество <input id="quantity_input" type="number" min="1" value="1" style="max-width: 20%">--}}
                                 @auth
                                     <form action="{{url('/add_to_cart')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{$product->id}}">
-                                        <button class="btn btn-outline-primary cart_button mt-2">Добавить в корзину</button>
+                                        <button class="btn btn-primary cart_button mt-2">Добавить в корзину</button>
                                     </form>
                                 @else
-                                    <button class="btn btn-outline-primary cart_button mt-2" data-toggle="modal" data-target="#loginModal">Добавить в корзину</button>
+                                    <button class="btn btn-primary cart_button mt-2" data-toggle="modal" data-target="#loginModal">Добавить в корзину</button>
 {{--                                    <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">{{ __('Войти') }}</a>--}}
                                 @endauth
                             </div>

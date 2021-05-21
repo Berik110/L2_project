@@ -18,12 +18,12 @@ class UserController extends Controller
         $subcategories = Subcategory::all();
         $products = Product::all();
 
-//        $userId = Auth::user()->id;
-//        $orders = DB::table('orders')
-//            ->join('products', 'orders.product_id', '=', 'products.id')
-//            ->where('orders.user_id', $userId)
-//            ->get();
+        $userId = Auth::user()->id;
+        $orders = DB::table('orders')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->where('orders.user_id', $userId)
+            ->get();
 
-        return view('profile_page', compact('user', 'categories', 'subcategories', 'products'));
+        return view('profile_page', compact('user', 'categories', 'subcategories', 'products', 'orders'));
     }
 }
